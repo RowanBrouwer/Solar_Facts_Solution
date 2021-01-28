@@ -11,7 +11,6 @@ namespace Solar_Facts.DAL.Models
     {
         public int Id { get; set; }
         public int CoreTemp { get;  set; }
-        public ICollection<PlanetAndDwarfPlanet> Planets { get; set; }
         public int SolarSystemId { get; set; }
         public SolarSystem solarSystem { get; set; }
         public long Age { get; set; }

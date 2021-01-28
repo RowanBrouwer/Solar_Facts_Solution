@@ -4,6 +4,7 @@ using Solar_Facts.DAL.Models;
 using Solar_Facts.DAL.Services;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace SolarFactsTest
@@ -13,9 +14,9 @@ namespace SolarFactsTest
         public ISolarSystem ISolar = new SolarSystemInterface();
 
         [Fact]
-        public void PlanetFilterByChar()
+        public async Task PlanetFilterByChar()
         {
-            List<PlanetAndDwarfPlanet> queryResults = ISolar.GetPlanetsContaining('p', 't');
+            List<PlanetAndDwarfPlanet> queryResults = await ISolar.GetPlanetsContaining('p', 't');
             foreach (var result in queryResults)
             {
                 Assert.True(result.Name.Contains('p') || result.Name.Contains('t'));
@@ -23,23 +24,23 @@ namespace SolarFactsTest
         }
 
         [Fact]
-        public void GetPlanetbyId()
+        public async Task GetPlanetbyId()
         {
-            PlanetAndDwarfPlanet planetWithId4 = ISolar.GetByPlanetId(4);
+            PlanetAndDwarfPlanet planetWithId4 = await ISolar.GetByPlanetId(4);
             Assert.Equal(4, planetWithId4.Id);
         }
 
         [Fact]
-        public void GetAverageTempOfSinglePlanet()
+        public async Task GetAverageTempOfSinglePlanet()
         {
-            PlanetAndDwarfPlanet Earth = ISolar.GetByPlanetId(3);
+            PlanetAndDwarfPlanet Earth = await ISolar.GetByPlanetId(3);
             Assert.Equal(-15, Earth.SurfaceTempAvg);
         }
 
         [Fact]
-        public void GetPlanetsByTypePlanet()
+        public async Task GetPlanetsByTypePlanet()
         {
-            List<PlanetAndDwarfPlanet> result = ISolar.GetByType(CelestialTypeEnum.Planet);
+            List<PlanetAndDwarfPlanet> result = await ISolar.GetByType(CelestialTypeEnum.Planet);
             foreach (PlanetAndDwarfPlanet planet in result)
             {
                 Assert.Equal(CelestialTypeEnum.Planet, planet.Type);
@@ -47,9 +48,9 @@ namespace SolarFactsTest
         }
 
         [Fact]
-        public void GetPlanetsByTypeDwarfPlanet()
+        public async Task GetPlanetsByTypeDwarfPlanet()
         {
-            List<PlanetAndDwarfPlanet> result = ISolar.GetByType(CelestialTypeEnum.DwarfPlanet);
+            List<PlanetAndDwarfPlanet> result = await ISolar.GetByType(CelestialTypeEnum.DwarfPlanet);
             foreach (PlanetAndDwarfPlanet planet in result)
             {
                 Assert.Equal(CelestialTypeEnum.DwarfPlanet, planet.Type);
@@ -57,9 +58,9 @@ namespace SolarFactsTest
         }
 
         [Fact]
-        public void GetPlanetsAbove0()
+        public async Task GetPlanetsAbove0()
         {
-            List<PlanetAndDwarfPlanet> result = ISolar.GetPlanetsByTempAbove0();
+            List<PlanetAndDwarfPlanet> result = await ISolar.GetPlanetsByTempAbove0();
             foreach (PlanetAndDwarfPlanet planet in result)
             {
                 Assert.True(planet.SurfaceTempMax > 0);

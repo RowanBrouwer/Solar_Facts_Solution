@@ -11,8 +11,8 @@ namespace Solar_Facts.DAL.Models
     public class PlanetAndDwarfPlanet : CelestialObjectBase
     {
         public int Id { get; set; }
-        public int StarId { get; set; }
-        public Star StarToOrbit { get; set; }
+        public int SolarSystemId { get; set; }
+        public SolarSystem SolarSystemToOrbit { get; set; }
         public int KnownMoons { get; set; }
         public long OrbitDistanceInKM { get; set; }
         public double OrbitPeriodInDays { get; set; }

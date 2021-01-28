@@ -9,24 +9,26 @@ namespace Solar_Facts.DAL.Services
 {
     public interface ISolarSystem
     {
-        SolarSystem GetSolarSystemById(int Id);
-        int GetTotalAmountOfBodies(SolarSystem solarSystem);
-        double GetAverageAmountOfMoonsByPlanetsInSolarSystem(SolarSystem solarSystem);
-        int TotalAmountOfMoons(SolarSystem solarSystem);
-        List<Star> GetStarsBySolarSystem(SolarSystem solarSystem);
+        Task<SolarSystem> GetSolarSystemById(int Id);
+        Task<int> GetTotalAmountOfBodies(SolarSystem solarSystem);
+        Task<double> GetAverageAmountOfMoonsByPlanetsInSolarSystem(SolarSystem solarSystem);
+        Task<int> TotalAmountOfMoons(SolarSystem solarSystem);
+        Task<List<Star>> GetStarsBySolarSystem(SolarSystem solarSystem);
 
-        Star GetStarById(int Id);
-        List<PlanetAndDwarfPlanet> GetPlanetsByStar(Star star);
-        List<PlanetAndDwarfPlanet> GetByDistanceToSunAscending(Star star);
-        List<PlanetAndDwarfPlanet> GetPlanetsByAmountOfMoonsDescending(Star star);
-        List<PlanetAndDwarfPlanet> GetByNameLenghtDescending(Star star);
-        List<PlanetAndDwarfPlanet> GetByNameLenghtascending(Star star);
-        List<PlanetAndDwarfPlanet> GetClosestPlanetsByStar(Star star);
+        Task<Star> GetStarById(int Id);
+        Task<List<PlanetAndDwarfPlanet>> GetPlanetsBySolarSystem(SolarSystem solarSystem);
+        Task<List<PlanetAndDwarfPlanet>> GetByDistanceToSunAscending(SolarSystem solarSystem);
+        Task<List<PlanetAndDwarfPlanet>> GetPlanetsByAmountOfMoonsDescending(SolarSystem solarSystem);
+        Task<List<PlanetAndDwarfPlanet>> GetByNameLenghtDescending(SolarSystem solarSystem);
+        Task<List<PlanetAndDwarfPlanet>> GetByNameLenghtascending(SolarSystem solarSystem);
+        Task<List<PlanetAndDwarfPlanet>> GetClosestPlanetsBySolarSystem(SolarSystem solarSystem);
+        Task PrintListOfAvgTempsForTypesBySolarSystem(SolarSystem solarSystem);
 
-        List<PlanetAndDwarfPlanet> GetByType(CelestialTypeEnum celestialType);
-        PlanetAndDwarfPlanet GetByPlanetId(int Id);
-        List<PlanetAndDwarfPlanet> GetPlanetsContaining(char char1, char char2);
-        List<PlanetAndDwarfPlanet> GetPlanetsByTempAbove0();
+        Task<List<PlanetAndDwarfPlanet>> GetByType(CelestialTypeEnum celestialType);
+        Task<PlanetAndDwarfPlanet> GetByPlanetId(int Id);
+        Task<List<PlanetAndDwarfPlanet>> GetPlanetsContaining(char char1, char char2);
+        Task<List<PlanetAndDwarfPlanet>> GetPlanetsByTempAbove0();
+        
         
     }
 }

@@ -14,18 +14,18 @@ namespace SolarFactsTest
         public ISolarSystem ISolar = new SolarSystemInterface();
 
         [Fact]
-        public void GetPlanetsByStar()
+        public async Task GetPlanetsByStar()
         {
-            Star star = ISolar.GetStarById(1);
+            Star star = await ISolar.GetStarById(1);
             Assert.Equal(1, star.Id);
         }
 
         [Fact]
-        public void GetByDistanceToSunAscending()
+        public async Task GetByDistanceToSunAscending()
         {
             long? lastDistance = null;
-            Star star = ISolar.GetStarById(1);
-            List<PlanetAndDwarfPlanet> result = ISolar.GetByDistanceToSunAscending(star);
+            SolarSystem solarSystem = await ISolar.GetSolarSystemById(1);
+            List<PlanetAndDwarfPlanet> result = await ISolar.GetByDistanceToSunAscending(solarSystem);
             foreach (PlanetAndDwarfPlanet planet in result)
             {
                 if (lastDistance == null)
@@ -41,11 +41,11 @@ namespace SolarFactsTest
         }
 
         [Fact]
-        public void GetPlanetsByAmountOfMoonsDescending()
+        public async Task GetPlanetsByAmountOfMoonsDescending()
         {
             int? LastAmountOfMoons = null;
-            Star star = ISolar.GetStarById(1);
-            List<PlanetAndDwarfPlanet> result = ISolar.GetPlanetsByAmountOfMoonsDescending(star);
+            SolarSystem solarSystem = await ISolar.GetSolarSystemById(1);
+            List<PlanetAndDwarfPlanet> result = await ISolar.GetClosestPlanetsBySolarSystem(solarSystem);
             foreach (PlanetAndDwarfPlanet planet in result)
             {
                 if (LastAmountOfMoons == null)
@@ -61,11 +61,11 @@ namespace SolarFactsTest
         }
 
         [Fact]
-        public void GetByNameLenghtDescending()
+        public async Task GetByNameLenghtDescending()
         {
             int? LastNameLenght = null;
-            Star star = ISolar.GetStarById(1);
-            List<PlanetAndDwarfPlanet> result = ISolar.GetByNameLenghtDescending(star);
+            SolarSystem solarSystem = await ISolar.GetSolarSystemById(1);
+            List<PlanetAndDwarfPlanet> result = await ISolar.GetClosestPlanetsBySolarSystem(solarSystem);
 
             foreach (PlanetAndDwarfPlanet planet in result)
             {
@@ -82,11 +82,11 @@ namespace SolarFactsTest
         }
 
         [Fact]
-        public void GetByNameLenghtascending()
+        public async Task GetByNameLenghtascending()
         {
             int? LastNameLenght = null;
-            Star star = ISolar.GetStarById(1);
-            List<PlanetAndDwarfPlanet> result = ISolar.GetByNameLenghtascending(star);
+            SolarSystem solarSystem = await ISolar.GetSolarSystemById(1);
+            List<PlanetAndDwarfPlanet> result = await ISolar.GetClosestPlanetsBySolarSystem(solarSystem);
 
             foreach (PlanetAndDwarfPlanet planet in result)
             {
@@ -103,10 +103,10 @@ namespace SolarFactsTest
         }
 
         [Fact]
-        public void GetClosestPlanetsByStar()
+        public async Task GetClosestPlanetsByStar()
         {
-            Star star = ISolar.GetStarById(1);
-            List<PlanetAndDwarfPlanet> result = ISolar.GetClosestPlanetsByStar(star);
+            SolarSystem solarSystem = await ISolar.GetSolarSystemById(1);
+            List<PlanetAndDwarfPlanet> result = await ISolar.GetClosestPlanetsBySolarSystem(solarSystem);
 
             Assert.Equal("Earth", result[0].Name);
             Assert.Equal("Venus", result[1].Name);

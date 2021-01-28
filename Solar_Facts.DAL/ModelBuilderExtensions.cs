@@ -39,7 +39,7 @@ namespace Solar_Facts.DAL
                 OrbitDistanceInKM = 57900000,
                 OrbitPeriodInDays = 88,
                 Type = CelestialTypeEnum.Planet,
-                StarId = 1
+                SolarSystemId = 1
             };
             planetlist.Add(Mercury);
             var Venus = new PlanetAndDwarfPlanet
@@ -53,7 +53,7 @@ namespace Solar_Facts.DAL
                 OrbitDistanceInKM = 108200000,
                 OrbitPeriodInDays = 224.7,
                 Type = CelestialTypeEnum.Planet,
-                StarId = 1
+                SolarSystemId = 1
             };
             planetlist.Add(Venus);
             var Earth = new PlanetAndDwarfPlanet
@@ -67,7 +67,7 @@ namespace Solar_Facts.DAL
                 OrbitDistanceInKM = 149600000,
                 OrbitPeriodInDays = 365.2,
                 Type = CelestialTypeEnum.Planet,
-                StarId = 1
+                SolarSystemId = 1
             };
             planetlist.Add(Earth);
             var Mars = new PlanetAndDwarfPlanet
@@ -81,7 +81,7 @@ namespace Solar_Facts.DAL
                 OrbitDistanceInKM = 227900000,
                 OrbitPeriodInDays = 693.96,
                 Type = CelestialTypeEnum.Planet,
-                StarId = 1
+                SolarSystemId = 1
             };
             planetlist.Add(Mars);
             var Ceres = new PlanetAndDwarfPlanet
@@ -95,7 +95,7 @@ namespace Solar_Facts.DAL
                 OrbitDistanceInKM = 413700000,
                 OrbitPeriodInDays = 1680.11,
                 Type = CelestialTypeEnum.DwarfPlanet,
-                StarId = 1
+                SolarSystemId = 1
             };
             planetlist.Add(Ceres);
             var Jupiter = new PlanetAndDwarfPlanet
@@ -109,7 +109,7 @@ namespace Solar_Facts.DAL
                 OrbitDistanceInKM = 778300000,
                 OrbitPeriodInDays = 4346.38,
                 Type = CelestialTypeEnum.Planet,
-                StarId = 1
+                SolarSystemId = 1
             };
             planetlist.Add(Jupiter);
             var Saturn = new PlanetAndDwarfPlanet
@@ -123,7 +123,7 @@ namespace Solar_Facts.DAL
                 OrbitDistanceInKM = 1400000000,
                 OrbitPeriodInDays = 10774.65,
                 Type = CelestialTypeEnum.Planet,
-                StarId = 1
+                SolarSystemId = 1
             };
             planetlist.Add(Saturn);
             var Uranus = new PlanetAndDwarfPlanet
@@ -137,7 +137,7 @@ namespace Solar_Facts.DAL
                 OrbitDistanceInKM = 2900000000,
                 OrbitPeriodInDays = 30680.37,
                 Type = CelestialTypeEnum.Planet,
-                StarId = 1
+                SolarSystemId = 1
             };
             planetlist.Add(Uranus);
             var Neptune = new PlanetAndDwarfPlanet
@@ -151,7 +151,7 @@ namespace Solar_Facts.DAL
                 OrbitDistanceInKM = 4500000000,
                 OrbitPeriodInDays = 60191.96,
                 Type = CelestialTypeEnum.Planet,
-                StarId = 1
+                SolarSystemId = 1
             };
             planetlist.Add(Neptune);
             var Pluto = new PlanetAndDwarfPlanet
@@ -165,7 +165,7 @@ namespace Solar_Facts.DAL
                 OrbitDistanceInKM = 5900000000,
                 OrbitPeriodInDays = 89849.65,
                 Type = CelestialTypeEnum.DwarfPlanet,
-                StarId = 1
+                SolarSystemId = 1
             };
             planetlist.Add(Pluto);
             var Haumea = new PlanetAndDwarfPlanet
@@ -179,7 +179,7 @@ namespace Solar_Facts.DAL
                 OrbitDistanceInKM = 6400000000,
                 OrbitPeriodInDays = 103473.20,
                 Type = CelestialTypeEnum.DwarfPlanet,
-                StarId = 1
+                SolarSystemId = 1
             };
             planetlist.Add(Haumea);
             var Makemake = new PlanetAndDwarfPlanet
@@ -193,7 +193,7 @@ namespace Solar_Facts.DAL
                 OrbitDistanceInKM = 6900000000,
                 OrbitPeriodInDays = 113188.65,
                 Type = CelestialTypeEnum.DwarfPlanet,
-                StarId = 1
+                SolarSystemId = 1
             };
             planetlist.Add(Makemake);
             var Eris = new PlanetAndDwarfPlanet
@@ -207,7 +207,7 @@ namespace Solar_Facts.DAL
                 OrbitDistanceInKM = 10100000000,
                 OrbitPeriodInDays = 204864.52,
                 Type = CelestialTypeEnum.DwarfPlanet,
-                StarId = 1
+                SolarSystemId = 1
             };
             planetlist.Add(Eris);
 

@@ -28,12 +28,13 @@ namespace Solar_Facts.DAL
         {
             modelBuilder.Entity<SolarSystem>()
                 .HasMany<Star>(ss => ss.Stars)
-                .WithOne(s => s.solarSystem);
+                .WithOne(s => s.solarSystem)
+                .HasForeignKey(s => s.SolarSystemId);
 
-            modelBuilder.Entity<PlanetAndDwarfPlanet>()
-                .HasOne<Star>(p => p.StarToOrbit)
-                .WithMany(s => s.Planets)
-                .HasForeignKey(p => p.StarId);
+            modelBuilder.Entity<SolarSystem>()
+                .HasMany<PlanetAndDwarfPlanet>(ss => ss.Planets)
+                .WithOne(p => p.SolarSystemToOrbit)
+                .HasForeignKey(p => p.SolarSystemId);
 
               ModelBuilderExtensions.Seed(modelBuilder);
         }

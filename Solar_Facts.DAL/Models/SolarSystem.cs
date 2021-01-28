@@ -13,6 +13,7 @@ namespace Solar_Facts.DAL.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public ICollection<Star> Stars { get; set; }
+        public ICollection<PlanetAndDwarfPlanet> Planets { get; set; }
         public int AmountOfStars
         {
             get { return Stars.Count(); }
