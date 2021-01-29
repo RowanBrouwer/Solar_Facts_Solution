@@ -1,20 +1,18 @@
-﻿using Solar_Facts.UIPages;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace Solar_Facts
+namespace Solar_Facts.UIPages
 {
-    class Program
+    public class PlanetRenderer
     {
-        static async Task Main(string[] args)
-        { 
-            
+        public static async void PlanetPageRendering(Dictionary<string, string> StringDictionary)
+        {
             string input = null;
             string LetterString = null;
             string NumberString = null;
-            Dictionary<string, string> StringDictionary = null;
             long Numbers;
 
             while (true)
@@ -47,13 +45,9 @@ namespace Solar_Facts
 
                 if (LetterString != null)
                 {
-                    if (LetterString == "p")
+                    if (LetterString == "q")
                     {
-                        PlanetRenderer.PlanetPageRendering(StringDictionary);
-                    }
-                    else if (LetterString == "q")
-                    {
-                        Environment.Exit(0);
+                        break;
                     }
                 }
             }

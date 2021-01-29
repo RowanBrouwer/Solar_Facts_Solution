@@ -8,7 +8,7 @@ namespace Solar_Facts
 {
     public class FilterChars
     {
-        public static Dictionary<string, List<char>> CharInOutFilterdCharLists(char[] CharInput)
+        public static async Task<Dictionary<string, List<char>>> CharInOutFilterdCharLists(List<char> CharInput)
         {
 
             List<char> LetterInput = new List<char>();
@@ -28,10 +28,11 @@ namespace Solar_Facts
                     IntInput.Add(charinp);
                 }
             }
+
             CharAndNumbers.Add("Letters", LetterInput);
             CharAndNumbers.Add("Numbers", IntInput);
 
-            return CharAndNumbers;
+            return await Task.FromResult(CharAndNumbers);
         }
     }
 }
