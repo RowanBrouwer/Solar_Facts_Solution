@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Solar_Facts.DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Solar_Facts.UIPages
 {
     public class PlanetRenderer
     {
-        public static async void PlanetPageRendering(Dictionary<string, string> StringDictionary)
+        public static async void PlanetPageRendering(Dictionary<string, string> StringDictionary, SolarSystemModel ChosenSolarSystem)
         {
             string input = null;
             string LetterString = null;

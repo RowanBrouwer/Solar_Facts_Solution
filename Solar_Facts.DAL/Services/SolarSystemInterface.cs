@@ -10,7 +10,7 @@ namespace Solar_Facts.DAL.Services
     public class SolarSystemInterface : ISolarSystem
     {
 
-        public async Task<double> GetAverageAmountOfMoonsByPlanetsInSolarSystem(SolarSystem solarSystem)
+        public async Task<double> GetAverageAmountOfMoonsByPlanetsInSolarSystem(SolarSystemModel solarSystem)
         {
             Dictionary<string, int> SolarSystemCount;
 
@@ -24,9 +24,9 @@ namespace Solar_Facts.DAL.Services
             return TotalAmountOfMoons / totalAmountOfPlanets;
         }
 
-        public async Task<SolarSystem> GetSolarSystemById(int Id)
+        public async Task<SolarSystemModel> GetSolarSystemById(int Id)
         {
-            SolarSystem solarSystem;
+            SolarSystemModel solarSystem;
 
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
@@ -36,9 +36,9 @@ namespace Solar_Facts.DAL.Services
             return solarSystem;
         }
 
-        public async Task<List<Star>> GetStarsBySolarSystem(SolarSystem solarSystem)
+        public async Task<List<StarModel>> GetStarsBySolarSystem(SolarSystemModel solarSystem)
         {
-            List<Star> list;
+            List<StarModel> list;
 
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
@@ -48,7 +48,7 @@ namespace Solar_Facts.DAL.Services
             return await Task.FromResult(list);
         }
 
-        public async Task<int> GetTotalAmountOfBodies(SolarSystem solarSystem)
+        public async Task<int> GetTotalAmountOfBodies(SolarSystemModel solarSystem)
         {
             Dictionary<string, int> SolarSystemCount;
             int sum;
@@ -64,7 +64,7 @@ namespace Solar_Facts.DAL.Services
             return sum;
         }
 
-        public async Task<int> TotalAmountOfMoons(SolarSystem solarSystem)
+        public async Task<int> TotalAmountOfMoons(SolarSystemModel solarSystem)
         {
             Dictionary<string, int> SolarSystemCount;
             int TotalAmountOfMoons;
@@ -78,11 +78,11 @@ namespace Solar_Facts.DAL.Services
             return TotalAmountOfMoons;
         }
 
-        private async Task<Dictionary<string, int>> CountOfSolarSystemObjects(SolarSystem solarSystem)
+        private async Task<Dictionary<string, int>> CountOfSolarSystemObjects(SolarSystemModel solarSystem)
         {
             Dictionary<string, int> Numbers = new Dictionary<string, int>();
 
-            List<Star> CurrentStars = await GetStarsBySolarSystem(solarSystem);
+            List<StarModel> CurrentStars = await GetStarsBySolarSystem(solarSystem);
             List<PlanetAndDwarfPlanet> CurrentPlanets = await GetPlanetsBySolarSystem(solarSystem);
             var totalAmountOfStars = CurrentStars.Count();
             var totalAmountOfPlanets = CurrentPlanets.Count();
@@ -102,7 +102,7 @@ namespace Solar_Facts.DAL.Services
             return Numbers;
         }
 
-        public async Task<List<PlanetAndDwarfPlanet>> GetByDistanceToSunAscending(SolarSystem solarSystem)
+        public async Task<List<PlanetAndDwarfPlanet>> GetByDistanceToSunAscending(SolarSystemModel solarSystem)
         {
             List<PlanetAndDwarfPlanet> list = await GetPlanetsBySolarSystem(solarSystem);
             list.OrderBy(p => p.OrbitDistanceInKM).ToList();
@@ -110,7 +110,7 @@ namespace Solar_Facts.DAL.Services
             return await Task.FromResult(list);
         }
 
-        public async Task<List<PlanetAndDwarfPlanet>> GetPlanetsByAmountOfMoonsDescending(SolarSystem solarSystem)
+        public async Task<List<PlanetAndDwarfPlanet>> GetPlanetsByAmountOfMoonsDescending(SolarSystemModel solarSystem)
         {
             List<PlanetAndDwarfPlanet> list = await GetPlanetsBySolarSystem(solarSystem);
             list.OrderByDescending(p => p.OrbitDistanceInKM).ToList();
@@ -118,7 +118,7 @@ namespace Solar_Facts.DAL.Services
             return await Task.FromResult(list);
         }
 
-        public async Task<List<PlanetAndDwarfPlanet>> GetPlanetsBySolarSystem(SolarSystem solarSystem)
+        public async Task<List<PlanetAndDwarfPlanet>> GetPlanetsBySolarSystem(SolarSystemModel solarSystem)
         {
             List<PlanetAndDwarfPlanet> list;
 
@@ -130,7 +130,7 @@ namespace Solar_Facts.DAL.Services
             return await Task.FromResult(list);
         }
 
-        public async Task<List<PlanetAndDwarfPlanet>> GetByNameLenghtDescending(SolarSystem solarSystem)
+        public async Task<List<PlanetAndDwarfPlanet>> GetByNameLenghtDescending(SolarSystemModel solarSystem)
         {
             List<PlanetAndDwarfPlanet> list = await GetPlanetsBySolarSystem(solarSystem);
             list.OrderByDescending(p => p.Name.Count()).ToList();
@@ -197,7 +197,7 @@ namespace Solar_Facts.DAL.Services
             return await Task.FromResult(list);
         }
 
-        public async Task<List<PlanetAndDwarfPlanet>> GetByNameLenghtascending(SolarSystem solarSystem)
+        public async Task<List<PlanetAndDwarfPlanet>> GetByNameLenghtascending(SolarSystemModel solarSystem)
         {
             List<PlanetAndDwarfPlanet> list = await GetPlanetsBySolarSystem(solarSystem);
             list.OrderBy(p => p.Name.Count()).ToList();
@@ -205,7 +205,7 @@ namespace Solar_Facts.DAL.Services
             return await Task.FromResult(list);
         }
 
-        public async Task<List<PlanetAndDwarfPlanet>> GetClosestPlanetsBySolarSystem(SolarSystem solarSystem)
+        public async Task<List<PlanetAndDwarfPlanet>> GetClosestPlanetsBySolarSystem(SolarSystemModel solarSystem)
         {
             List<PlanetAndDwarfPlanet> planetlist = await GetPlanetsBySolarSystem(solarSystem);
 
@@ -254,9 +254,9 @@ namespace Solar_Facts.DAL.Services
 
         }
 
-        public async Task<Star> GetStarById(int Id)
+        public async Task<StarModel> GetStarById(int Id)
         {
-            Star star;
+            StarModel star;
 
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
@@ -266,17 +266,17 @@ namespace Solar_Facts.DAL.Services
             return star;
         }
 
-        public async Task PrintListOfAvgTempsForTypesBySolarSystem(SolarSystem solarSystem)
+        public async Task PrintListOfAvgTempsForTypesBySolarSystem(SolarSystemModel solarSystem)
         {
             Task<List<PlanetAndDwarfPlanet>> dwarfTask = GetByType(CelestialTypeEnum.DwarfPlanet);
             Task<List<PlanetAndDwarfPlanet>> planetTask = GetByType(CelestialTypeEnum.Planet);
-            Task<List<Star>> sunTask = GetStarsBySolarSystem(solarSystem);
+            Task<List<StarModel>> sunTask = GetStarsBySolarSystem(solarSystem);
 
             var EnumTasks = new List<Task> { dwarfTask, planetTask, sunTask };
 
             List<PlanetAndDwarfPlanet> FilterdDwarfPlanets = null;
             List<PlanetAndDwarfPlanet> FilterdPlanets = null;
-            List<Star> Filterdsuns = null;
+            List<StarModel> Filterdsuns = null;
 
             while (EnumTasks.Count > 0)
             {
@@ -293,7 +293,7 @@ namespace Solar_Facts.DAL.Services
                 }
                 else if (finishedTask == sunTask)
                 {
-                    List<Star> suns = sunTask.Result;
+                    List<StarModel> suns = sunTask.Result;
                     Filterdsuns = suns.Where(s => s.solarSystem == solarSystem).ToList();
                 }
                 if (EnumTasks.TrueForAll(t => t.IsCompletedSuccessfully))
@@ -316,7 +316,7 @@ namespace Solar_Facts.DAL.Services
                     {
                         DpTempsSum += planet.SurfaceTempAvg;
                     }
-                    foreach (Star sun in Filterdsuns)
+                    foreach (StarModel sun in Filterdsuns)
                     {
                         DpTempsSum += sun.SurfaceTempAvg;
                     }
@@ -325,6 +325,18 @@ namespace Solar_Facts.DAL.Services
                 Console.WriteLine($"\nThe average of all dwarf planets combined is : {PTempsSum / FilterdPlanets.Count()}");
                 Console.WriteLine($"\nThe average of all dwarf planets combined is : {STempsSum / Filterdsuns.Count()}");
             }
+        }
+
+        public async Task<List<SolarSystemModel>> GetListOfSolarSystems()
+        {
+            List<SolarSystemModel> list;
+
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                list = context.SolarSystems.OrderBy(ss => ss.Name).ToList();
+            }
+
+            return await Task.FromResult(list);
         }
     }
 }

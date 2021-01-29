@@ -12,7 +12,7 @@ namespace Solar_Facts.DAL.Models
     {
         public int Id { get; set; }
         public int SolarSystemId { get; set; }
-        public SolarSystem SolarSystemToOrbit { get; set; }
+        public SolarSystemModel SolarSystemToOrbit { get; set; }
         public int KnownMoons { get; set; }
         public long OrbitDistanceInKM { get; set; }
         public double OrbitPeriodInDays { get; set; }

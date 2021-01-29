@@ -1,4 +1,8 @@
-﻿using Solar_Facts.UIPages;
+﻿using Solar_Facts.DAL;
+using Solar_Facts.DAL.Models;
+using Solar_Facts.DAL.Services;
+using Solar_Facts.ParsingServices;
+using Solar_Facts.UIPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,48 +13,68 @@ namespace Solar_Facts
     class Program
     {
         static async Task Main(string[] args)
-        { 
-            
+        {
+
             string input = null;
             string LetterString = null;
-            string NumberString = null;
             Dictionary<string, string> StringDictionary = null;
-            long Numbers;
+            int Numbers = 0;
+            SolarSystemModel ChosenSolarSystem = null;
 
             while (true)
             {
-                input = null;
-                input = Console.ReadLine();
+                if (ChosenSolarSystem != null)
+                {
+                    input = null;
+                    input = Console.ReadLine();
+                }
 
                 if (input != null)
                 {
                     StringDictionary = await StringToList.ConvertToSepperateValues(input);
-
                     LetterString = StringDictionary["LetterString"];
-                    NumberString = StringDictionary["NumberString"];
-                    if (NumberString.Count() > 0)
+                    Numbers = await Parser.GetNumberStringParsed(StringDictionary);
+                }
+
+                while (ChosenSolarSystem == null)
+                {
+                    ISolarSystem Context = new SolarSystemInterface();
+
+                    Console.WriteLine("Choose a solar system by Id!");
+
+                    List<SolarSystemModel> solarSystems = await Context.GetListOfSolarSystems();
+
+                    foreach (var solarSystem in solarSystems)
                     {
-                        try
-                        {
-                            Numbers = long.Parse(NumberString);
-                        }
-                        catch (FormatException)
-                        {
-                            Console.WriteLine($"Unable to parse '{NumberString}'");
-                        }
-                        catch (OverflowException)
-                        {
-                            Console.WriteLine($"Number to big or too small to use '{NumberString}'");
-                        }
+                        Console.WriteLine($"Name: |{solarSystem.Name}| Id:|{solarSystem.Id}|");
+                    }
+
+                    input = null;
+                    input = Console.ReadLine();
+
+                    if (input != null)
+                    {
+                        StringDictionary = await StringToList.ConvertToSepperateValues(input);
+                        Numbers = await Parser.GetNumberStringParsed(StringDictionary);
+                    }
+
+                    if (Numbers != 0)
+                    {
+                        ChosenSolarSystem = await Context.GetSolarSystemById(Numbers);
+                        Console.WriteLine($"{ChosenSolarSystem.Name} set as solar system to work with!");
                     }
                 }
 
                 if (LetterString != null)
                 {
-                    if (LetterString == "p")
+                    if (ChosenSolarSystem != null)
                     {
-                        PlanetRenderer.PlanetPageRendering(StringDictionary);
+                        if (LetterString == "planeten")
+                        {
+                            PlanetRenderer.PlanetPageRendering(StringDictionary, ChosenSolarSystem);
+                        }
                     }
+
                     else if (LetterString == "q")
                     {
                         Environment.Exit(0);

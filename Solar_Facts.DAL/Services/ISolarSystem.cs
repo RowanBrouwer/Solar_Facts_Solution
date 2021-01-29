@@ -9,20 +9,21 @@ namespace Solar_Facts.DAL.Services
 {
     public interface ISolarSystem
     {
-        Task<SolarSystem> GetSolarSystemById(int Id);
-        Task<int> GetTotalAmountOfBodies(SolarSystem solarSystem);
-        Task<double> GetAverageAmountOfMoonsByPlanetsInSolarSystem(SolarSystem solarSystem);
-        Task<int> TotalAmountOfMoons(SolarSystem solarSystem);
-        Task<List<Star>> GetStarsBySolarSystem(SolarSystem solarSystem);
+        Task<List<SolarSystemModel>> GetListOfSolarSystems();
+        Task<SolarSystemModel> GetSolarSystemById(int Id);
+        Task<int> GetTotalAmountOfBodies(SolarSystemModel solarSystem);
+        Task<double> GetAverageAmountOfMoonsByPlanetsInSolarSystem(SolarSystemModel solarSystem);
+        Task<int> TotalAmountOfMoons(SolarSystemModel solarSystem);
+        Task<List<StarModel>> GetStarsBySolarSystem(SolarSystemModel solarSystem);
 
-        Task<Star> GetStarById(int Id);
-        Task<List<PlanetAndDwarfPlanet>> GetPlanetsBySolarSystem(SolarSystem solarSystem);
-        Task<List<PlanetAndDwarfPlanet>> GetByDistanceToSunAscending(SolarSystem solarSystem);
-        Task<List<PlanetAndDwarfPlanet>> GetPlanetsByAmountOfMoonsDescending(SolarSystem solarSystem);
-        Task<List<PlanetAndDwarfPlanet>> GetByNameLenghtDescending(SolarSystem solarSystem);
-        Task<List<PlanetAndDwarfPlanet>> GetByNameLenghtascending(SolarSystem solarSystem);
-        Task<List<PlanetAndDwarfPlanet>> GetClosestPlanetsBySolarSystem(SolarSystem solarSystem);
-        Task PrintListOfAvgTempsForTypesBySolarSystem(SolarSystem solarSystem);
+        Task<StarModel> GetStarById(int Id);
+        Task<List<PlanetAndDwarfPlanet>> GetPlanetsBySolarSystem(SolarSystemModel solarSystem);
+        Task<List<PlanetAndDwarfPlanet>> GetByDistanceToSunAscending(SolarSystemModel solarSystem);
+        Task<List<PlanetAndDwarfPlanet>> GetPlanetsByAmountOfMoonsDescending(SolarSystemModel solarSystem);
+        Task<List<PlanetAndDwarfPlanet>> GetByNameLenghtDescending(SolarSystemModel solarSystem);
+        Task<List<PlanetAndDwarfPlanet>> GetByNameLenghtascending(SolarSystemModel solarSystem);
+        Task<List<PlanetAndDwarfPlanet>> GetClosestPlanetsBySolarSystem(SolarSystemModel solarSystem);
+        Task PrintListOfAvgTempsForTypesBySolarSystem(SolarSystemModel solarSystem);
 
         Task<List<PlanetAndDwarfPlanet>> GetByType(CelestialTypeEnum celestialType);
         Task<PlanetAndDwarfPlanet> GetByPlanetId(int Id);

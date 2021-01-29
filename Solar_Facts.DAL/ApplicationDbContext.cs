@@ -26,20 +26,20 @@ namespace Solar_Facts.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SolarSystem>()
-                .HasMany<Star>(ss => ss.Stars)
+            modelBuilder.Entity<SolarSystemModel>()
+                .HasMany<StarModel>(ss => ss.Stars)
                 .WithOne(s => s.solarSystem)
                 .HasForeignKey(s => s.SolarSystemId);
 
-            modelBuilder.Entity<SolarSystem>()
+            modelBuilder.Entity<SolarSystemModel>()
                 .HasMany<PlanetAndDwarfPlanet>(ss => ss.Planets)
                 .WithOne(p => p.SolarSystemToOrbit)
                 .HasForeignKey(p => p.SolarSystemId);
 
               ModelBuilderExtensions.Seed(modelBuilder);
         }
-        public DbSet<SolarSystem> SolarSystems { get; set; }
-        public DbSet<Star> Stars { get; set; }
+        public DbSet<SolarSystemModel> SolarSystems { get; set; }
+        public DbSet<StarModel> Stars { get; set; }
         public DbSet<PlanetAndDwarfPlanet> PlntAndDPlnt { get; set; }
 
         

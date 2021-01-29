@@ -49,7 +49,7 @@ namespace SolarFactsTest
         public async void GetStarsBySolarSystem()
         {
             var solarSystem = await ISolar.GetSolarSystemById(1);
-            List<Star> result = await ISolar.GetStarsBySolarSystem(solarSystem);
+            List<StarModel> result = await ISolar.GetStarsBySolarSystem(solarSystem);
             Assert.True(result.Count == 1);
             Assert.Equal(1, result[0].Id);
         }

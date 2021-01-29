@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Solar_Facts.DAL.Models
 {
-    public class SolarSystem
+    public class SolarSystemModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Star> Stars { get; set; }
+        public ICollection<StarModel> Stars { get; set; }
         public ICollection<PlanetAndDwarfPlanet> Planets { get; set; }
         public int AmountOfStars
         {

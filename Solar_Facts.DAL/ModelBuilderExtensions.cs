@@ -12,10 +12,10 @@ namespace Solar_Facts.DAL
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            ICollection<Star> starlist = new List<Star>();
+            ICollection<StarModel> starlist = new List<StarModel>();
             ICollection<PlanetAndDwarfPlanet> planetlist = new List<PlanetAndDwarfPlanet>();
 
-            var TheSun = new Star
+            var TheSun = new StarModel
             {
                 Id = 1,
                 Name = "The Sun",
@@ -211,7 +211,7 @@ namespace Solar_Facts.DAL
             };
             planetlist.Add(Eris);
 
-            var TheSolarSystem = new SolarSystem
+            var TheSolarSystem = new SolarSystemModel
             {
                 Id = 1,
                 Name = "The Solar system",
@@ -220,14 +220,14 @@ namespace Solar_Facts.DAL
 
             
 
-            modelBuilder.Entity<Star>().HasData(TheSun);
+            modelBuilder.Entity<StarModel>().HasData(TheSun);
 
             foreach (PlanetAndDwarfPlanet planet in planetlist)
             {
                 modelBuilder.Entity<PlanetAndDwarfPlanet>().HasData(planet);
             }
             
-            modelBuilder.Entity<SolarSystem>().HasData(TheSolarSystem);        
+            modelBuilder.Entity<SolarSystemModel>().HasData(TheSolarSystem);        
         }
     }
 }

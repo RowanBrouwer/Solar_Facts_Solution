@@ -16,7 +16,7 @@ namespace SolarFactsTest
         [Fact]
         public async void GetPlanetsByStar()
         {
-            Star star = await ISolar.GetStarById(1);
+            StarModel star = await ISolar.GetStarById(1);
             Assert.Equal(1, star.Id);
         }
 
@@ -24,7 +24,7 @@ namespace SolarFactsTest
         public async void GetByDistanceToSunAscending()
         {
             long? lastDistance = null;
-            SolarSystem solarSystem = await ISolar.GetSolarSystemById(1);
+            SolarSystemModel solarSystem = await ISolar.GetSolarSystemById(1);
             List<PlanetAndDwarfPlanet> result = await ISolar.GetByDistanceToSunAscending(solarSystem);
             foreach (PlanetAndDwarfPlanet planet in result)
             {
@@ -44,7 +44,7 @@ namespace SolarFactsTest
         public async void GetPlanetsByAmountOfMoonsDescending()
         {
             int? LastAmountOfMoons = null;
-            SolarSystem solarSystem = await ISolar.GetSolarSystemById(1);
+            SolarSystemModel solarSystem = await ISolar.GetSolarSystemById(1);
             List<PlanetAndDwarfPlanet> result = await ISolar.GetClosestPlanetsBySolarSystem(solarSystem);
             foreach (PlanetAndDwarfPlanet planet in result)
             {
@@ -64,7 +64,7 @@ namespace SolarFactsTest
         public async void GetByNameLenghtDescending()
         {
             int? LastNameLenght = null;
-            SolarSystem solarSystem = await ISolar.GetSolarSystemById(1);
+            SolarSystemModel solarSystem = await ISolar.GetSolarSystemById(1);
             List<PlanetAndDwarfPlanet> result = await ISolar.GetClosestPlanetsBySolarSystem(solarSystem);
 
             foreach (PlanetAndDwarfPlanet planet in result)
@@ -85,7 +85,7 @@ namespace SolarFactsTest
         public async void GetByNameLenghtascending()
         {
             int? LastNameLenght = null;
-            SolarSystem solarSystem = await ISolar.GetSolarSystemById(1);
+            SolarSystemModel solarSystem = await ISolar.GetSolarSystemById(1);
             List<PlanetAndDwarfPlanet> result = await ISolar.GetClosestPlanetsBySolarSystem(solarSystem);
 
             foreach (PlanetAndDwarfPlanet planet in result)
@@ -105,7 +105,7 @@ namespace SolarFactsTest
         [Fact]
         public async void GetClosestPlanetsByStar()
         {
-            SolarSystem solarSystem = await ISolar.GetSolarSystemById(1);
+            SolarSystemModel solarSystem = await ISolar.GetSolarSystemById(1);
             List<PlanetAndDwarfPlanet> result = await ISolar.GetClosestPlanetsBySolarSystem(solarSystem);
 
             Assert.Equal("Earth", result[0].Name);
