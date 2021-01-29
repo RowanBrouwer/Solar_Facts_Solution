@@ -14,7 +14,7 @@ namespace SolarFactsTest
         public ISolarSystem ISolar = new SolarSystemInterface();
 
         [Fact]
-        public async Task PlanetFilterByChar()
+        public async void PlanetFilterByChar()
         {
             List<PlanetAndDwarfPlanet> queryResults = await ISolar.GetPlanetsContaining('p', 't');
             foreach (var result in queryResults)
@@ -24,21 +24,21 @@ namespace SolarFactsTest
         }
 
         [Fact]
-        public async Task GetPlanetbyId()
+        public async void GetPlanetbyId()
         {
             PlanetAndDwarfPlanet planetWithId4 = await ISolar.GetByPlanetId(4);
             Assert.Equal(4, planetWithId4.Id);
         }
 
         [Fact]
-        public async Task GetAverageTempOfSinglePlanet()
+        public async void GetAverageTempOfSinglePlanet()
         {
             PlanetAndDwarfPlanet Earth = await ISolar.GetByPlanetId(3);
             Assert.Equal(-15, Earth.SurfaceTempAvg);
         }
 
         [Fact]
-        public async Task GetPlanetsByTypePlanet()
+        public async void GetPlanetsByTypePlanet()
         {
             List<PlanetAndDwarfPlanet> result = await ISolar.GetByType(CelestialTypeEnum.Planet);
             foreach (PlanetAndDwarfPlanet planet in result)
@@ -48,7 +48,7 @@ namespace SolarFactsTest
         }
 
         [Fact]
-        public async Task GetPlanetsByTypeDwarfPlanet()
+        public async void GetPlanetsByTypeDwarfPlanet()
         {
             List<PlanetAndDwarfPlanet> result = await ISolar.GetByType(CelestialTypeEnum.DwarfPlanet);
             foreach (PlanetAndDwarfPlanet planet in result)
@@ -58,7 +58,7 @@ namespace SolarFactsTest
         }
 
         [Fact]
-        public async Task GetPlanetsAbove0()
+        public async void GetPlanetsAbove0()
         {
             List<PlanetAndDwarfPlanet> result = await ISolar.GetPlanetsByTempAbove0();
             foreach (PlanetAndDwarfPlanet planet in result)
