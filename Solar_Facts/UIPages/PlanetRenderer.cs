@@ -1,4 +1,5 @@
 ﻿using Solar_Facts.DAL.Models;
+using Solar_Facts.UIParts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Solar_Facts.UIPages
 {
     public class PlanetRenderer
     {
-        public static async void PlanetPageRendering(Dictionary<string, string> StringDictionary, SolarSystemModel ChosenSolarSystem)
+        public static async void PlanetPageRendering(SolarSystemModel ChosenSolarSystem)
         {
             string input = null;
             string LetterString = null;
@@ -18,37 +19,15 @@ namespace Solar_Facts.UIPages
 
             while (true)
             {
-                input = null;
-                input = Console.ReadLine();
-
-                if (input != null)
-                {
-                    StringDictionary = await StringToList.ConvertToSepperateValues(input);
-
-                    LetterString = StringDictionary["LetterString"];
-                    NumberString = StringDictionary["NumberString"];
-                    if (NumberString.Count() > 0)
-                    {
-                        try
-                        {
-                            Numbers = long.Parse(NumberString);
-                        }
-                        catch (FormatException)
-                        {
-                            Console.WriteLine($"Unable to parse '{NumberString}'");
-                        }
-                        catch (OverflowException)
-                        {
-                            Console.WriteLine($"Number to big or too small to use '{NumberString}'");
-                        }
-                    }
-                }
+                (int, string) result = await InputUiParts.GetInputAndParse(input);
+                Numbers = result.Item1;
+                LetterString = result.Item2;
 
                 if (LetterString != null)
                 {
                     if (LetterString == "q")
                     {
-                        break;
+                        Environment.Exit(0);
                     }
                 }
             }

@@ -3,6 +3,7 @@ using Solar_Facts.DAL.Models;
 using Solar_Facts.DAL.Services;
 using Solar_Facts.ParsingServices;
 using Solar_Facts.UIPages;
+using Solar_Facts.UIParts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,70 +15,38 @@ namespace Solar_Facts
     {
         static async Task Main(string[] args)
         {
-
+            (int, string) result = (0, null) ;
             string input = null;
             string LetterString = null;
-            Dictionary<string, string> StringDictionary = null;
-            int Numbers = 0;
             SolarSystemModel ChosenSolarSystem = null;
+            int Numbers = 0;
+            bool running = true;
 
-            while (true)
+            while (running)
             {
-                if (ChosenSolarSystem != null)
-                {
-                    input = null;
-                    input = Console.ReadLine();
-                }
-
-                if (input != null)
-                {
-                    StringDictionary = await StringToList.ConvertToSepperateValues(input);
-                    LetterString = StringDictionary["LetterString"];
-                    Numbers = await Parser.GetNumberStringParsed(StringDictionary);
-                }
+                result = await InputUiParts.GetInputAndParse(input);
+                Numbers = result.Item1;
+                LetterString = result.Item2;
 
                 while (ChosenSolarSystem == null)
                 {
-                    ISolarSystem Context = new SolarSystemInterface();
+                    result = await InputUiParts.GetInputAndParse(input);
 
-                    Console.WriteLine("Choose a solar system by Id!");
+                    ChosenSolarSystem = await SolarSystemUIComponents.SetChosenSolarSystem(result);
+                }
 
-                    List<SolarSystemModel> solarSystems = await Context.GetListOfSolarSystems();
-
-                    foreach (var solarSystem in solarSystems)
-                    {
-                        Console.WriteLine($"Name: |{solarSystem.Name}| Id:|{solarSystem.Id}|");
-                    }
-
-                    input = null;
-                    input = Console.ReadLine();
-
-                    if (input != null)
-                    {
-                        StringDictionary = await StringToList.ConvertToSepperateValues(input);
-                        Numbers = await Parser.GetNumberStringParsed(StringDictionary);
-                    }
-
-                    if (Numbers != 0)
-                    {
-                        ChosenSolarSystem = await Context.GetSolarSystemById(Numbers);
-                        Console.WriteLine($"{ChosenSolarSystem.Name} set as solar system to work with!");
-                    }
+                if (ChosenSolarSystem != null)
+                {
+                    result = await InputUiParts.GetInputAndParse(input);
+                    Numbers = result.Item1;
+                    LetterString = result.Item2;
                 }
 
                 if (LetterString != null)
                 {
                     if (ChosenSolarSystem != null)
                     {
-                        if (LetterString == "planeten")
-                        {
-                            PlanetRenderer.PlanetPageRendering(StringDictionary, ChosenSolarSystem);
-                        }
-                    }
-
-                    else if (LetterString == "q")
-                    {
-                        Environment.Exit(0);
+                        InputUiParts.MainMenuComp(LetterString, ChosenSolarSystem);
                     }
                 }
             }
