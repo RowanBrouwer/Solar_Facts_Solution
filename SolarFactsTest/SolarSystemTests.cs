@@ -13,16 +13,15 @@ namespace SolarFactsTest
     {
         public ISolarSystem ISolar = new SolarSystemInterface();
 
-
         [Fact]
-        public async void GetSolarSystemById()
+        public async Task GetSolarSystemById()
         {
             var solarSystem = await ISolar.GetSolarSystemById(1);
             Assert.Equal(1, solarSystem.Id);
         }
 
         [Fact]
-        public async void GetTotalAmountOfBodysInSolarSystem()
+        public async Task GetTotalAmountOfBodysInSolarSystem()
         {
             var solarSystem = await ISolar.GetSolarSystemById(1);
             int result = await ISolar.GetTotalAmountOfBodies(solarSystem);
@@ -30,7 +29,7 @@ namespace SolarFactsTest
         }
 
         [Fact]
-        public async void GetAverageAmountOfMoonsByPlanetInSolarSystem()
+        public async Task GetAverageAmountOfMoonsByPlanetInSolarSystem()
         {
             var solarSystem = await ISolar.GetSolarSystemById(1);
             double result = await ISolar.GetAverageAmountOfMoonsByPlanetsInSolarSystem(solarSystem);
@@ -38,7 +37,7 @@ namespace SolarFactsTest
         }
 
         [Fact]
-        public async void GetTotalAmountOfMoons()
+        public async Task GetTotalAmountOfMoons()
         {
             var solarSystem = await ISolar.GetSolarSystemById(1);
             int result = await ISolar.TotalAmountOfMoons(solarSystem);
@@ -46,7 +45,7 @@ namespace SolarFactsTest
         }
 
         [Fact]
-        public async void GetStarsBySolarSystem()
+        public async Task GetStarsBySolarSystem()
         {
             var solarSystem = await ISolar.GetSolarSystemById(1);
             List<StarModel> result = await ISolar.GetStarsBySolarSystem(solarSystem);

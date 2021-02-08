@@ -38,10 +38,10 @@ namespace Solar_Facts.DAL
 
               ModelBuilderExtensions.Seed(modelBuilder);
         }
+
         public DbSet<SolarSystemModel> SolarSystems { get; set; }
         public DbSet<StarModel> Stars { get; set; }
         public DbSet<PlanetAndDwarfPlanet> PlntAndDPlnt { get; set; }
 
-        
     }
 }

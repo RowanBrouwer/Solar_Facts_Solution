@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Solar_Facts", "Solar_Facts\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Solar_Facts.DAL", "Solar_Facts.DAL\Solar_Facts.DAL.csproj", "{C5746F07-0B60-4C86-AA8D-417F074F329F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolarFactsTest", "SolarFactsTest\SolarFactsTest.csproj", "{8E98A662-D0C5-4EC6-9C0F-0A833A049E8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolarFactsTest", "SolarFactsTest\SolarFactsTest.csproj", "{8E98A662-D0C5-4EC6-9C0F-0A833A049E8B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C5D6EDD9-3291-4F62-B1B1-A1A92D981D07}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Documents\Diagram.drawio = ..\..\..\Documents\Diagram.drawio
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
