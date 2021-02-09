@@ -25,7 +25,7 @@ namespace SolarFactsTest
         {
             long? lastDistance = null;
             SolarSystemModel solarSystem = await ISolar.GetSolarSystemById(1);
-            List<PlanetAndDwarfPlanet> result = await ISolar.GetByDistanceToSunAscending(solarSystem);
+            IEnumerable<PlanetAndDwarfPlanet> result = await ISolar.GetByDistanceToSunAscending(solarSystem);
             foreach (PlanetAndDwarfPlanet planet in result)
             {
                 if (lastDistance == null)
@@ -45,7 +45,7 @@ namespace SolarFactsTest
         {
             int? LastAmountOfMoons = null;
             SolarSystemModel solarSystem = await ISolar.GetSolarSystemById(1);
-            List<PlanetAndDwarfPlanet> result = await ISolar.GetClosestPlanetsBySolarSystem(solarSystem);
+            IEnumerable<PlanetAndDwarfPlanet> result = await ISolar.GetPlanetsByAmountOfMoonsDescending(solarSystem);
             foreach (PlanetAndDwarfPlanet planet in result)
             {
                 if (LastAmountOfMoons == null)
@@ -65,7 +65,7 @@ namespace SolarFactsTest
         {
             int? LastNameLenght = null;
             SolarSystemModel solarSystem = await ISolar.GetSolarSystemById(1);
-            List<PlanetAndDwarfPlanet> result = await ISolar.GetClosestPlanetsBySolarSystem(solarSystem);
+            IEnumerable<PlanetAndDwarfPlanet> result = await ISolar.GetByNameLenghtDescending(solarSystem);
 
             foreach (PlanetAndDwarfPlanet planet in result)
             {
@@ -86,7 +86,7 @@ namespace SolarFactsTest
         {
             int? LastNameLenght = null;
             SolarSystemModel solarSystem = await ISolar.GetSolarSystemById(1);
-            List<PlanetAndDwarfPlanet> result = await ISolar.GetClosestPlanetsBySolarSystem(solarSystem);
+            IEnumerable<PlanetAndDwarfPlanet> result = await ISolar.GetByNameLenghtAscending(solarSystem);
 
             foreach (PlanetAndDwarfPlanet planet in result)
             {
@@ -106,10 +106,10 @@ namespace SolarFactsTest
         public async Task GetClosestPlanetsByStar()
         {
             SolarSystemModel solarSystem = await ISolar.GetSolarSystemById(1);
-            List<PlanetAndDwarfPlanet> result = await ISolar.GetClosestPlanetsBySolarSystem(solarSystem);
+            ClosestPlanets result = await ISolar.GetClosestPlanetsBySolarSystem(solarSystem);
 
-            Assert.Equal("Earth", result[0].Name);
-            Assert.Equal("Venus", result[1].Name);
+            Assert.Equal("earth", result.PlanetA.Name.ToLower());
+            Assert.Equal("venus", result.PlanetB.Name.ToLower());
         }
     }
 }

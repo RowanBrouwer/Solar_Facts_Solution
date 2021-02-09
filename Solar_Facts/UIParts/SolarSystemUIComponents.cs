@@ -16,7 +16,7 @@ namespace Solar_Facts.UIParts
 
             Console.WriteLine("Choose a solar system by Id!");
 
-            List<SolarSystemModel> solarSystems = await Context.GetListOfSolarSystems();
+            IEnumerable<SolarSystemModel> solarSystems = await Context.GetListOfSolarSystems();
 
             foreach (var solarSystem in solarSystems)
             {

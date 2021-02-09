@@ -23,7 +23,7 @@ namespace Solar_Facts.DAL.Services
         Task<IEnumerable<PlanetAndDwarfPlanet>> GetByNameLenghtDescending(SolarSystemModel solarSystem);
         Task<IEnumerable<PlanetAndDwarfPlanet>> GetByNameLenghtAscending(SolarSystemModel solarSystem);
         Task<ClosestPlanets> GetClosestPlanetsBySolarSystem(SolarSystemModel solarSystem);
-        Task PrintListOfAvgTempsForTypesBySolarSystem(SolarSystemModel solarSystem);
+        Task<(double, double, double)> PrintListOfAvgTempsForTypesBySolarSystem(SolarSystemModel solarSystem);
 
         Task<IEnumerable<PlanetAndDwarfPlanet>> GetByType(CelestialTypeEnum celestialType);
         Task<PlanetAndDwarfPlanet> GetByPlanetId(int Id);

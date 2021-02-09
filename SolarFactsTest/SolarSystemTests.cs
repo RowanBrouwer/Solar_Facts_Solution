@@ -33,7 +33,7 @@ namespace SolarFactsTest
         {
             var solarSystem = await ISolar.GetSolarSystemById(1);
             double result = await ISolar.GetAverageAmountOfMoonsByPlanetsInSolarSystem(solarSystem);
-            Assert.Equal(13, result, 1);
+            Assert.Equal(13.9, result, 1);
         }
 
         [Fact]
@@ -48,9 +48,9 @@ namespace SolarFactsTest
         public async Task GetStarsBySolarSystem()
         {
             var solarSystem = await ISolar.GetSolarSystemById(1);
-            List<StarModel> result = await ISolar.GetStarsBySolarSystem(solarSystem);
-            Assert.True(result.Count == 1);
-            Assert.Equal(1, result[0].Id);
+            IEnumerable<StarModel> result = await ISolar.GetStarsBySolarSystem(solarSystem);
+            Assert.True(result.Count() == 1);
+            Assert.Equal(1, result.First().SolarSystemId);
         }
     }
 }

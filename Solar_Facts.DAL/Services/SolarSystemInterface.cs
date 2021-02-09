@@ -27,11 +27,9 @@ namespace Solar_Facts.DAL.Services
                 context.Stars.Where(s => s.SolarSystemId == solarSystem.Id));
 
         public async Task<int> GetTotalAmountOfBodies(SolarSystemModel solarSystem) =>
-           await Task.FromResult(context.SolarSystems
-                .Select(ss => ss.Planets.Count() +
-                              ss.Stars.Count() +
-                              ss.Planets.Select(p => p.KnownMoons).Count())
-                .Sum());
+               await GetPlanetCountBySolarSystem(solarSystem) + 
+               await GetStarCountBySolarSystem(solarSystem) + 
+               await GetKnownMoonsCountBySolarSystem(solarSystem);
 
         public async Task<int> TotalAmountOfMoons(SolarSystemModel solarSystem) =>
             await Task.FromResult(context.PlntAndDPlnt.Where(p => p.SolarSystemToOrbit == solarSystem)
@@ -43,7 +41,7 @@ namespace Solar_Facts.DAL.Services
 
         public async Task<IEnumerable<PlanetAndDwarfPlanet>> GetPlanetsByAmountOfMoonsDescending(SolarSystemModel solarSystem) =>
             await Task.FromResult(context.PlntAndDPlnt.Where(p => p.SolarSystemToOrbit == solarSystem)
-                .OrderBy(p => p.OrbitDistanceInKM));
+                .OrderByDescending(p => p.KnownMoons));
 
         public async Task<IEnumerable<PlanetAndDwarfPlanet>> GetPlanetsBySolarSystem(SolarSystemModel solarSystem) =>
             await Task.FromResult(context.PlntAndDPlnt.Where(p => p.SolarSystemId == solarSystem.Id));
@@ -59,7 +57,8 @@ namespace Solar_Facts.DAL.Services
 
 
         public async Task<IEnumerable<PlanetAndDwarfPlanet>> GetPlanetsContaining(char char1, char char2) =>
-            await Task.FromResult(context.PlntAndDPlnt.Where(p => p.Name.Contains(char1) || p.Name.Contains(char2)));
+            await Task.FromResult(context.PlntAndDPlnt.Where(p => p.Name.ToLower().Contains(char1.ToString()) ||
+                                                                  p.Name.ToLower().Contains(char2.ToString())));
 
         public async Task<IEnumerable<PlanetAndDwarfPlanet>> GetByType(CelestialTypeEnum celestialType) =>
             await Task.FromResult(context.PlntAndDPlnt.Where(p => p.Type == celestialType));
@@ -69,7 +68,7 @@ namespace Solar_Facts.DAL.Services
 
         public async Task<IEnumerable<PlanetAndDwarfPlanet>> GetByNameLenghtAscending(SolarSystemModel solarSystem) =>
             await Task.FromResult(context.PlntAndDPlnt.Where(p => p.SolarSystemToOrbit == solarSystem)
-                .OrderBy(p => p.Name));
+                .OrderBy(p => p.Name.Length));
 
         public async Task<ClosestPlanets> GetClosestPlanetsBySolarSystem(SolarSystemModel solarSystem) =>
             await Task.FromResult(context.PlntAndDPlnt
@@ -91,129 +90,35 @@ namespace Solar_Facts.DAL.Services
                     PlanetB = res.planetB,
                     Distance = res.measuredDistance
                 })
-                .First());         
+                .First());
 
-        public async Task<StarModel> GetStarById(int Id)
-        {
-            StarModel star;
+        public async Task<StarModel> GetStarById(int Id) =>
+            await context.Stars.FindAsync(Id);
 
-            using (ApplicationDbContext context = new ApplicationDbContext())
-            {
-                star = await context.Stars.FindAsync(Id);
-            }
+        public async Task<(double, double, double)> PrintListOfAvgTempsForTypesBySolarSystem(SolarSystemModel solarSystem) =>
+                await Task.FromResult((context.PlntAndDPlnt
+                    .Where(p => p.SolarSystemToOrbit == solarSystem && 
+                    p.Type == CelestialTypeEnum.DwarfPlanet)
+                    .Select(p => p.SurfaceTempAvg).Average(),
+                    
+                    context.PlntAndDPlnt.Where(p => p.SolarSystemToOrbit == solarSystem &&
+                    p.Type == CelestialTypeEnum.Planet)
+                    .Select(p => p.SurfaceTempAvg).Average(),
+                    
+                    context.Stars.Where(s => s.solarSystem == solarSystem)
+                    .Select(s => s.SurfaceTempAvg).Average()));
 
-            return star;
-        }
+        public async Task<IEnumerable<SolarSystemModel>> GetListOfSolarSystems() =>
+            await Task.FromResult(context.SolarSystems.OrderBy(ss => ss.Name));
 
-        public async Task PrintListOfAvgTempsForTypesBySolarSystem(SolarSystemModel solarSystem)
-        {
-            //Task<List<PlanetAndDwarfPlanet>> dwarfTask = GetByType(CelestialTypeEnum.DwarfPlanet);
-            //Task<List<PlanetAndDwarfPlanet>> planetTask = GetByType(CelestialTypeEnum.Planet);
-            //Task<List<StarModel>> sunTask = GetStarsBySolarSystem(solarSystem);
+        public async Task<int> GetKnownMoonsCountBySolarSystem(SolarSystemModel solarSystem) =>
+            await Task.FromResult(context.PlntAndDPlnt.Where(p => p.SolarSystemToOrbit == solarSystem)
+                .Select(p => p.KnownMoons).Sum());
 
-            //var EnumTasks = new List<Task> { dwarfTask, planetTask, sunTask };
+        public async Task<int> GetPlanetCountBySolarSystem(SolarSystemModel solarSystem) =>
+            await Task.FromResult(context.PlntAndDPlnt.Where(p => p.SolarSystemToOrbit == solarSystem).Count());
 
-            //List<PlanetAndDwarfPlanet> FilterdDwarfPlanets = null;
-            //List<PlanetAndDwarfPlanet> FilterdPlanets = null;
-            //List<StarModel> Filterdsuns = null;
-
-            //while (EnumTasks.Count > 0)
-            //{
-            //    Task finishedTask = await Task.WhenAny(EnumTasks);
-            //    if (finishedTask == dwarfTask)
-            //    {
-            //        List<PlanetAndDwarfPlanet> dwarfPlanets = dwarfTask.Result;
-            //        FilterdDwarfPlanets = dwarfPlanets.Where(p => p.SolarSystemToOrbit == solarSystem).ToList();
-            //    }
-            //    else if (finishedTask == planetTask)
-            //    {
-            //        List<PlanetAndDwarfPlanet> planets = planetTask.Result;
-            //        FilterdPlanets = planets.Where(p => p.SolarSystemToOrbit == solarSystem).ToList();
-            //    }
-            //    else if (finishedTask == sunTask)
-            //    {
-            //        List<StarModel> suns = sunTask.Result;
-            //        Filterdsuns = suns.Where(s => s.solarSystem == solarSystem).ToList();
-            //    }
-            //    if (EnumTasks.TrueForAll(t => t.IsCompletedSuccessfully))
-            //    {
-            //        break;
-            //    }
-
-
-            //    double DpTempsSum = 0;
-            //    double PTempsSum = 0;
-            //    double STempsSum = 0;
-
-            //    if (FilterdDwarfPlanets != null && FilterdPlanets != null && Filterdsuns != null)
-            //    {
-            //        foreach (PlanetAndDwarfPlanet dwarfPlanet in FilterdDwarfPlanets)
-            //        {
-            //            DpTempsSum += dwarfPlanet.SurfaceTempAvg;
-            //        }
-            //        foreach (PlanetAndDwarfPlanet planet in FilterdPlanets)
-            //        {
-            //            DpTempsSum += planet.SurfaceTempAvg;
-            //        }
-            //        foreach (StarModel sun in Filterdsuns)
-            //        {
-            //            DpTempsSum += sun.SurfaceTempAvg;
-            //        }
-            //    }
-            //    Console.WriteLine($"\nThe average of all dwarf planets combined is : {DpTempsSum / FilterdDwarfPlanets.Count()}");
-            //    Console.WriteLine($"\nThe average of all dwarf planets combined is : {PTempsSum / FilterdPlanets.Count()}");
-            //    Console.WriteLine($"\nThe average of all dwarf planets combined is : {STempsSum / Filterdsuns.Count()}");
-            //}
-        }
-
-        public async Task<IEnumerable<SolarSystemModel>> GetListOfSolarSystems()
-        {
-            List<SolarSystemModel> list;
-
-            using (ApplicationDbContext context = new ApplicationDbContext())
-            {
-                list = context.SolarSystems.OrderBy(ss => ss.Name).ToList();
-            }
-
-            return await Task.FromResult(list);
-        }
-
-
-
-        public async Task<int> GetKnownMoonsCountBySolarSystem(SolarSystemModel solarSystem)
-        {
-            int totalAmountOfMoons;
-
-            using (ApplicationDbContext context = new ApplicationDbContext())
-            {
-               totalAmountOfMoons = context.PlntAndDPlnt.Where(p => p.SolarSystemToOrbit == solarSystem).Select(p => p.KnownMoons).Sum();
-            }
-
-            return await Task.FromResult(totalAmountOfMoons);
-        }
-
-        public async Task<int> GetPlanetCountBySolarSystem(SolarSystemModel solarSystem)
-        {
-            int totalAmountofPlanets;
-
-            using (ApplicationDbContext context = new ApplicationDbContext())
-            {
-                totalAmountofPlanets = context.PlntAndDPlnt.Where(p => p.SolarSystemToOrbit == solarSystem).Count();
-            }
-
-            return await Task.FromResult(totalAmountofPlanets);
-        }
-
-        public async Task<int> GetStarCountBySolarSystem(SolarSystemModel solarSystem)
-        {
-            int totalAmountOfStars;
-
-            using (ApplicationDbContext context = new ApplicationDbContext())
-            {
-                totalAmountOfStars = context.Stars.Where(s => s.solarSystem == solarSystem).Count();
-            }
-
-            return await Task.FromResult(totalAmountOfStars);
-        }
+        public async Task<int> GetStarCountBySolarSystem(SolarSystemModel solarSystem) =>
+            await Task.FromResult(context.Stars.Where(s => s.solarSystem == solarSystem).Count());
     }
 }
